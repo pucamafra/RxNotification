@@ -21,7 +21,7 @@ ext {
     libraryName = 'Android - RxNotification'
     artifact = 'rx-notification'
 
-    libraryDescription = 'An Android library that bring segmented control style to TabLayout'
+    libraryDescription = 'Easy way to register, remove and manage notification using RxJava'
 
     siteUrl = 'https://github.com/pucamafra/RxNotification'
     gitUrl = 'https://github.com/pucamafra/RxNotification.git'
