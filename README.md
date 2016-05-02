@@ -1,7 +1,7 @@
 RxNotification
 ===============
 
-Easy way to register, remove and manage notification using RxJava
+Easy way to register, remove and manage notifications using RxJava
 
 Target platforms
 ---
