@@ -12,6 +12,7 @@ import java.io.IOException;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 public class RegisterNotificationOnSubscribe implements Observable.OnSubscribe<String> {
@@ -30,15 +31,18 @@ public class RegisterNotificationOnSubscribe implements Observable.OnSubscribe<S
     public void call(final Subscriber<? super String> subscriber) {
         Scheduler.Worker inner = Schedulers.io().createWorker();
         subscriber.add(inner);
-        inner.schedule(() -> {
-            try {
-                String token = InstanceID.getInstance(this.context).getToken(this.gcmRegId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-                subscriber.onNext(token);
-                subscriber.onCompleted();
-                Log.d(TAG, "Notification token:" + token);
-            } catch (IOException e) {
-                Log.d(TAG, e.getMessage());
-                subscriber.onError(e);
+        inner.schedule(new Action0() {
+            @Override
+            public void call() {
+                try {
+                    String token = InstanceID.getInstance(context).getToken(gcmRegId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                    subscriber.onNext(token);
+                    subscriber.onCompleted();
+                    Log.d(TAG, "Notification token:" + token);
+                } catch (IOException e) {
+                    Log.d(TAG, e.getMessage());
+                    subscriber.onError(e);
+                }
             }
         });
     }
