@@ -109,6 +109,57 @@ RxNotification.removeInstance(this)
                 });
 ```
 
+If you want you can extends the class RxGcmService. This class will help you to identify whether the app is running or not.
+
+```java
+public class GCMService extends RxGcmService {
+
+    @Override
+    public void onMessageReceived(String from, Bundle data, boolean isAppRunning) {
+        // Do whatever you want here
+    }
+}
+```
+
+Remember that you need to put these code on AndroidManifest.xml
+
+```xml
+
+   <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="<your-package>.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="<your-package>.permission.C2D_MESSAGE" />
+    
+    
+    <application ....>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.pucamafra.rxnotification" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.marlonmafra.rxnotification.sample.GCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+    </application>
+}
+```
+
+For more details, take a look on sample module.
+
+
 License
 ---
 
