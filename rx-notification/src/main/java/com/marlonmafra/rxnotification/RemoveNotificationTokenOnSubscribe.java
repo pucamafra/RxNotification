@@ -12,6 +12,7 @@ import java.io.IOException;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
+import rx.android.MainThreadSubscription;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
@@ -29,21 +30,29 @@ public class RemoveNotificationTokenOnSubscribe implements Observable.OnSubscrib
 
     @Override
     public void call(final Subscriber<? super Void> subscriber) {
-        Scheduler.Worker inner = Schedulers.io().createWorker();
-        subscriber.add(inner);
-        inner.schedule(new Action0() {
-            @Override
-            public void call() {
-                try {
-                    InstanceID.getInstance(context).deleteToken(gcmRegId, GoogleCloudMessaging.INSTANCE_ID_SCOPE);
-                    subscriber.onNext(null);
-                    subscriber.onCompleted();
-                    Log.d(TAG, "Token has been deleted successfully");
-                } catch (IOException e) {
-                    Log.d(TAG, e.getMessage());
-                    subscriber.onError(e);
+        if (!subscriber.isUnsubscribed()) {
+           final Scheduler.Worker inner = Schedulers.io().createWorker();
+            subscriber.add(inner);
+            inner.schedule(new Action0() {
+                @Override
+                public void call() {
+                    try {
+                        InstanceID.getInstance(context).deleteToken(gcmRegId, GoogleCloudMessaging.INSTANCE_ID_SCOPE);
+                        subscriber.onNext(null);
+                        subscriber.onCompleted();
+                        Log.d(TAG, "Token has been deleted successfully");
+                    } catch (IOException e) {
+                        Log.d(TAG, e.getMessage());
+                        subscriber.onError(e);
+                    }
                 }
-            }
-        });
+            });
+
+            subscriber.add(new MainThreadSubscription() {
+                @Override protected void onUnsubscribe() {
+                    inner.unsubscribe();
+                }
+            });
+        }
     }
 }
