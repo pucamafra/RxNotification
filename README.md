@@ -1,3 +1,5 @@
+<img width="100" src="./img/RxNotification_icon.png" />
+
 RxNotification
 ===============
 
