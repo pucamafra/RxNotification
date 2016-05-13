@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RxNotification</string>
+    <string name="google_play_service_out_date">Google play service is out date</string>
+    <string name="google_play_service_unknown_error">UNKNOWN_ERROR_CODE( %1s )</string>
+    <string name="google_play_service_unsupported_device">Your device does not support Google Play Service</string>
+    <string name="google_play_service_not_installed">Google Play Service not installed</string>
 </resources>
