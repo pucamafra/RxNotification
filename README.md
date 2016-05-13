@@ -15,7 +15,7 @@ Target platforms
 Latest version
 ---
 
-- Version 1.0.0  (MAY. 1, 2016)
+- Version 1.0.1  (MAY. 12, 2016)
 
 Usage
 ---
@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-	   compile 'com.marlonmafra.rxnotification:rx-notification:1.0.0'
+	   compile 'com.marlonmafra.rxnotification:rx-notification:1.0.1'
 }
 ```
 
@@ -42,7 +42,7 @@ dependencies {
 <dependency>
     <groupId>com.marlonmafra.rxnotification</groupId>
     <artifactId>rx-notification</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <type>pom</type>
 </dependency>
 ```
@@ -50,7 +50,7 @@ dependencies {
 **3. Ivy**
 
  ```xml
-<dependency org='com.marlonmafra.rxnotification' name='rx-notification' rev='1.0.0'/>
+<dependency org='com.marlonmafra.rxnotification' name='rx-notification' rev='1.0.1'/>
 ```
 
 # Sample usage
