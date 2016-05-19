@@ -119,17 +119,17 @@ RxNotification.removeInstance(this)
 Verify whether the Google play Service is update/installed or not
 
 ```java
- try {
+        try {
             RxNotificationUtil.verifyGooglePlayService(this);
-            // Register token
+            //Register token
         } catch (DeviceUnsupportedException e) {
-           // Do Whatever you want
+            //Do Whatever you want
         } catch (GooglePlayServicesOutDatedException e) {
-           // Do Whatever you want
+            //Do Whatever you want
         } catch (GooglePlayServicesNotInstalledException e) {
-           // Do Whatever you want
+            //Do Whatever you want
         } catch (UnknownErrorException e) {
-            // Do Whatever you want
+            //Do Whatever you want
         }
 ```
 
