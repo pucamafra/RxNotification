@@ -40,10 +40,10 @@ dependencies {
 
  ```xml
 <dependency>
-    <groupId>com.marlonmafra.rxnotification</groupId>
-    <artifactId>rx-notification</artifactId>
-    <version>1.1.0</version>
-    <type>pom</type>
+        <groupId>com.marlonmafra.rxnotification</groupId>
+        <artifactId>rx-notification</artifactId>
+        <version>1.1.0</version>
+        <type>pom</type>
 </dependency>
 ```
 
