@@ -4,6 +4,11 @@ import android.content.Context;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+
+import java.util.concurrent.Callable;
+
 import rx.Observable;
 
 import static com.marlonmafra.rxnotification.util.Preconditions.checkNotNull;
@@ -34,10 +39,15 @@ public class RxNotification {
      */
     @CheckResult
     @NonNull
-    public static Observable<String> getToken(@NonNull Context context, @NonNull String gcmRegId) {
+    public static Observable<String> getToken(@NonNull final Context context, @NonNull final String gcmRegId) {
         checkNotNull(context, "context == null");
         checkNotNull(gcmRegId, "gcmRegId == null");
-        return Observable.create(new RegisterNotificationOnSubscribe(context, gcmRegId));
+        return Observable.fromCallable(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return InstanceID.getInstance(context).getToken(gcmRegId, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            }
+        });
     }
 
     /**
@@ -64,10 +74,16 @@ public class RxNotification {
      */
     @CheckResult
     @NonNull
-    public static Observable<Void> removeToken(@NonNull Context context, @NonNull String gcmRegId) {
+    public static Observable<Void> removeToken(@NonNull final Context context, @NonNull final String gcmRegId) {
         checkNotNull(context, "context == null");
         checkNotNull(gcmRegId, "gcmRegId == null");
-        return Observable.create(new RemoveNotificationTokenOnSubscribe(context, gcmRegId));
+        return Observable.fromCallable(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                InstanceID.getInstance(context).deleteToken(gcmRegId, GoogleCloudMessaging.INSTANCE_ID_SCOPE);
+                return null;
+            }
+        });
     }
 
     /**
@@ -78,8 +94,14 @@ public class RxNotification {
      */
     @CheckResult
     @NonNull
-    public static Observable<Void> removeInstance(@NonNull Context context) {
+    public static Observable<Void> removeInstance(@NonNull final Context context) {
         checkNotNull(context, "context == null");
-        return Observable.create(new RemoveNotificationInstanceOnSubscribe(context));
+        return Observable.fromCallable(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                InstanceID.getInstance(context).deleteInstanceID();
+                return null;
+            }
+        });
     }
 }

@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             RxNotificationUtil.verifyGooglePlayService(this);
             RxNotification.getToken(getApplicationContext(), this.gcmRegId)
+                    .subscribeOn(Schedulers.io())
                     .subscribe(new Observer<String>() {
                         @Override
                         public void onCompleted() {
@@ -74,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btnRemove)
     public void removeToken() {
         RxNotification.removeToken(this, this.gcmRegId)
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Void>() {
                     @Override
                     public void onCompleted() {
-                        Log.d(TAG, "onCompleted");
                     }
 
                     @Override
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Void avoid) {
-                        Log.d(TAG, "onNext");
+                        Log.d(TAG, "Token has been deleted successfully");
                     }
                 });
     }
