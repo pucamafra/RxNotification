@@ -15,7 +15,7 @@ Target platforms
 Latest version
 ---
 
-- Version 1.0.1  (MAY. 12, 2016)
+- Version 1.1.0  (MAY. 19, 2016)
 
 Usage
 ---
@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-	   compile 'com.marlonmafra.rxnotification:rx-notification:1.0.1'
+	   compile 'com.marlonmafra.rxnotification:rx-notification:1.1.0'
 }
 ```
 
@@ -42,7 +42,7 @@ dependencies {
 <dependency>
     <groupId>com.marlonmafra.rxnotification</groupId>
     <artifactId>rx-notification</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <type>pom</type>
 </dependency>
 ```
@@ -50,7 +50,7 @@ dependencies {
 **3. Ivy**
 
  ```xml
-<dependency org='com.marlonmafra.rxnotification' name='rx-notification' rev='1.0.1'/>
+<dependency org='com.marlonmafra.rxnotification' name='rx-notification' rev='1.1.0'/>
 ```
 
 # Sample usage
@@ -59,6 +59,7 @@ Getting a token
 
 ```java
   RxNotification.getToken(getApplicationContext(), R.string.gcm_regId)
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onCompleted() {
@@ -79,6 +80,7 @@ Removing a token
 
 ```java
 RxNotification.removeToken(this, R.string.gcm_regId)
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Void>() {
                     @Override
                     public void onCompleted() {
@@ -98,6 +100,7 @@ Removing instance. All tokens will be removed
 
 ```java
 RxNotification.removeInstance(this)
+.               subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Void>() {
                     @Override
                     public void onCompleted() {
@@ -111,6 +114,23 @@ RxNotification.removeInstance(this)
                     public void onNext(Void mVoid) {
                     }
                 });
+```
+
+Verify whether the Google play Service is update/installed or not
+
+```java
+ try {
+            RxNotificationUtil.verifyGooglePlayService(this);
+            // Register token
+        } catch (DeviceUnsupportedException e) {
+           // Do Whatever you want
+        } catch (GooglePlayServicesOutDatedException e) {
+           // Do Whatever you want
+        } catch (GooglePlayServicesNotInstalledException e) {
+           // Do Whatever you want
+        } catch (UnknownErrorException e) {
+            // Do Whatever you want
+        }
 ```
 
 If you want you can extends the class RxGcmService. This class will help you to identify whether the app is running or not.
