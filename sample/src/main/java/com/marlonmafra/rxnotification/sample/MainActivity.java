@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "TestNotification";
 
-    private String gcmRegId = "744983548091";
+    private String gcmRegId = "1049342831495";
 
 
     @Bind(R.id.btnRegister)
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public void register() {
         try {
             RxNotificationUtil.verifyGooglePlayService(this);
-            RxNotification.getToken(getApplicationContext(), this.gcmRegId)
+            RxNotification.getToken(this.gcmRegId)
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Observer<String>() {
                         @Override
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnRemove)
     public void removeToken() {
-        RxNotification.removeToken(this, this.gcmRegId)
+        RxNotification.removeToken(this.gcmRegId)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Void>() {
                     @Override

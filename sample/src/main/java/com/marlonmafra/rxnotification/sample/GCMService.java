@@ -1,13 +1,16 @@
 package com.marlonmafra.rxnotification.sample;
 
-import android.os.Bundle;
+import android.util.Log;
 
-import com.marlonmafra.rxnotification.service.RxGcmService;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
-public class GCMService extends RxGcmService {
+public class GCMService extends FirebaseMessagingService {
 
     @Override
-    public void onMessageReceived(String from, Bundle data, boolean isAppRunning) {
+    public void onMessageReceived(RemoteMessage message) {
         // Do whatever you want here
+        Log.d("TAG", "dfgdfg");
     }
+
 }

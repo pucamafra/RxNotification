@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "1049342831495",
+    "firebase_url": "https://push-test-ebdb1.firebaseio.com",
+    "project_id": "push-test-ebdb1",
+    "storage_bucket": "push-test-ebdb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049342831495:android:bb705dc33411683c",
+        "android_client_info": {
+          "package_name": "com.marlonmafra.rxnotification.sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049342831495-vtvq8ueo2slrjl6o30entac9urlvc0jo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marlonmafra.rxnotification.sample",
+            "certificate_hash": "2B1F8BBD9DD83640E730042ACC896CFC21EEEC2D"
+          }
+        },
+        {
+          "client_id": "1049342831495-cis7i8r29oodtkehc9aaqmedk09et480.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEKn73KBubhey6HJetye1lHOQVmpS4hUc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
