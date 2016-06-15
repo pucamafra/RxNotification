@@ -15,7 +15,7 @@ Target platforms
 Latest version
 ---
 
-- Version 1.1.0  (MAY. 19, 2016)
+- Version 2.0.0  (JUN. 15, 2016)
 
 Usage
 ---
@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-	   compile 'com.marlonmafra.rxnotification:rx-notification:1.1.0'
+	   compile 'com.marlonmafra.rxnotification:rx-notification:2.0.0'
 }
 ```
 
@@ -42,7 +42,7 @@ dependencies {
 <dependency>
         <groupId>com.marlonmafra.rxnotification</groupId>
         <artifactId>rx-notification</artifactId>
-        <version>1.1.0</version>
+        <version>2.0.0</version>
         <type>pom</type>
 </dependency>
 ```
@@ -50,7 +50,7 @@ dependencies {
 **3. Ivy**
 
  ```xml
-<dependency org='com.marlonmafra.rxnotification' name='rx-notification' rev='1.1.0'/>
+<dependency org='com.marlonmafra.rxnotification' name='rx-notification' rev='2.0.0'/>
 ```
 
 # Sample usage
@@ -58,7 +58,7 @@ dependencies {
 Getting a token
 
 ```java
-  RxNotification.getToken(getApplicationContext(), R.string.gcm_regId)
+  RxNotification.getToken(this.gcmRegId)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<String>() {
                     @Override
@@ -76,10 +76,30 @@ Getting a token
                 });
 ```
 
+or
+
+```java
+  RxNotification.getToken()
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(String token) {
+                      //Send token to back-end
+                    }
+                });
+```
 Removing a token
 
 ```java
-RxNotification.removeToken(this, R.string.gcm_regId)
+RxNotification.removeToken(this.gcmRegId)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Void>() {
                     @Override
@@ -133,47 +153,17 @@ Verify whether the Google play Service is update/installed or not
         }
 ```
 
-If you want you can extends the class RxGcmService. This class will help you to identify whether the app is running or not.
-
-```java
-public class GCMService extends RxGcmService {
-
-    @Override
-    public void onMessageReceived(String from, Bundle data, boolean isAppRunning) {
-        // Do whatever you want here
-    }
-}
-```
-
-Remember that you need to put these code on AndroidManifest.xml
+According with the new library from Firebase Cloud Message you only need to put these code on AndroidManifest.xml
 
 ```xml
 
-   <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <permission
-        android:name="<your-package>.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="<your-package>.permission.C2D_MESSAGE" />
-    
-    
     <application ....>
-
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.example.pucamafra.rxnotification" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name="com.marlonmafra.rxnotification.sample.GCMService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
