@@ -168,7 +168,6 @@ According with the new library from Firebase Cloud Message you only need to put 
         </service>
 
     </application>
-}
 ```
 
 For more details, take a look on sample module.
